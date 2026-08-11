@@ -22,8 +22,9 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://ai-first-crm-git-main-prem-eb43.vercel.app",
         "https://ai-first-crm-green.vercel.app",
+        "https://ai-first-crm-git-main-prem-eb43.vercel.app",
+        "https://ai-first-cgui8uu1n-prem-eb43.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
