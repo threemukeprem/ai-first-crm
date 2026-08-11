@@ -1,31 +1,19 @@
-from functools import lru_cache
-
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    db_host: str
-    db_port: int = 5432
-    db_name: str
-    db_user: str
-    db_password: str
+    DB_HOST: str
+    DB_PORT: int = 5432
+    DB_NAME: str
+    DB_USER: str
+    DB_PASSWORD: str
 
-    openai_api_key: str | None = None
-    openai_model: str = "gpt-4.1-mini"
-
-    groq_api_key: str | None = None
-    groq_model: str = "llama-3.3-70b-versatile"
-
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding="utf-8",
-        extra="ignore",
-    )
+    @property
+    def database_url(self) -> str:
+        return (
+            f"postgresql+psycopg://{self.DB_USER}:{self.DB_PASSWORD}@"
+            f"{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}?sslmode=require"
+        )
 
 
-@lru_cache
-def get_settings() -> Settings:
-    return Settings()
-
-
-settings = get_settings()
+settings = Settings()
