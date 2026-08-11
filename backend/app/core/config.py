@@ -10,6 +10,12 @@ class Settings(BaseSettings):
     db_user: str
     db_password: str
 
+    openai_api_key: str | None = None
+    openai_model: str = "gpt-4.1-mini"
+
+    groq_api_key: str | None = None
+    groq_model: str = "llama-3.3-70b-versatile"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

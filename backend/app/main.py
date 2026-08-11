@@ -1,9 +1,14 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
+from app.api.ai import router as ai_router
+from app.api.follow_up import router as follow_up_router
+from app.api.hcp import router as hcp_router
+from app.api.interaction import router as interaction_router
+from app.api.tool_audit_log import router as tool_audit_log_router
 from app.db.session import engine
-
 
 app = FastAPI(
     title="AI-First CRM API",
@@ -11,6 +16,27 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# ---------------- CORS ----------------
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ---------------- Routers ----------------
+
+app.include_router(hcp_router)
+app.include_router(interaction_router)
+app.include_router(follow_up_router)
+app.include_router(tool_audit_log_router)
+app.include_router(ai_router)
+
+# ---------------- Endpoints ----------------
 
 @app.get("/")
 def read_root():
