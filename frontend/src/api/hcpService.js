@@ -1,25 +1,19 @@
-import api from "./api";
+import API from "./api";
 
-export const getHcps = async () => {
-  const response = await api.get("/hcps");
+// Get all HCPs
+export async function getHcps() {
+  const response = await API.get("/hcps");
   return response.data;
-};
+}
 
-export const getHcp = async (id) => {
-  const response = await api.get(`/hcps/${id}`);
+// Create new HCP
+export async function createHcp(hcpData) {
+  const response = await API.post("/hcps", hcpData);
   return response.data;
-};
+}
 
-export const createHcp = async (data) => {
-  const response = await api.post("/hcps", data);
+// Delete HCP
+export async function deleteHcp(id) {
+  const response = await API.delete(`/hcps/${id}`);
   return response.data;
-};
-
-export const updateHcp = async (id, data) => {
-  const response = await api.patch(`/hcps/${id}`, data);
-  return response.data;
-};
-
-export const deleteHcp = async (id) => {
-  await api.delete(`/hcps/${id}`);
-};
+}

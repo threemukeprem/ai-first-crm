@@ -3,7 +3,8 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from app.db.session import Base, database_url
+from app.db.session import Base
+from app.core.config import settings
 import app.models  # noqa: F401
 
 
@@ -15,7 +16,7 @@ if config.config_file_name is not None:
 
 config.set_main_option(
     "sqlalchemy.url",
-    database_url.render_as_string(hide_password=False).replace("%", "%%"),
+    settings.database_url.replace("%", "%%"),
 )
 
 
