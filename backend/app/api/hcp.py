@@ -128,11 +128,7 @@ def delete_hcp(
             detail="HCP not found.",
         )
 
-    try:
-        db.delete(hcp)
-        db.commit()
-        return {"message": "HCP deleted successfully"}
-    except Exception as e:
-        db.rollback()
-        print(f"DELETE ERROR: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+    db.delete(hcp)
+    db.commit()
+
+    return {"message": "HCP deleted successfully"}
